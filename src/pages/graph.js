@@ -1,10 +1,11 @@
 import React from "react"
 import SideNavigation from "../components/SideNavigation";
+import SearchBar from "../components/searchbar";
 
 function graph(){
     return (
         <div>
-            <h1>TEST TEST TEST</h1>
+            <SearchBar/>
         </div>
     )
     };
