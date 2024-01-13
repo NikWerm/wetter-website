@@ -4,6 +4,7 @@ import SideNavigation from "./SideNavigation";
 import { Line } from 'react-chartjs-2';
 import Sun from "../images/happysun.png";
 import Graph from "../pages/graph"
+import SearchBar from "./searchbar";
 
 function Home() {
   const [weatherData, setWeatherData] = useState([]);
@@ -12,25 +13,14 @@ function Home() {
   const [inputFocused, setInputFocused] = useState(false);
   const [apiUrl, setApiUrl] = useState("");
 
-  const handleSearch = () => {
-    const element = document.getElementsByClassName("input-field");
-    if (element[0].value === "") {
-      return 0;
-    }
-    const newApiUrl = "https://09651711-8867-4adf-8ae7-070a3ce64f43.mock.pstmn.io/" + element[0].value;
-    setApiUrl(newApiUrl);
-    setShowGreeting(false)
-  };
-
-  const handleInputFocus = () => {
-    setInputFocused(true);
-  };
-
-  const handleInputBlur = () => {
-    setInputFocused(false);
-  };
-
-  
+  const handleSearch = (value) => {
+        if (value === "") {
+            return 0;
+        }
+        const newApiUrl = "https://09651711-8867-4adf-8ae7-070a3ce64f43.mock.pstmn.io/" + value;
+        setApiUrl(newApiUrl);
+        setShowGreeting(false);
+    };
 
   useEffect(() => {
     const fetchWeatherData = async () => {
@@ -72,21 +62,7 @@ function Home() {
   return (
     <div>
       <SideNavigation></SideNavigation>
-
-      <div className="flex items-center justify-center mt-4 mb-4">
-        <div className="w-1/2 relative">
-            <input
-              type="search"
-              placeholder="Search..."
-              className={`w-full p-2 rounded-full bg-gray-800 text-white focus:outline-none focus:border focus:border-blue-500 input-field ${inputFocused ? 'h-10' : ''}`}
-              onFocus={handleInputFocus}
-              onBlur={handleInputBlur}
-            />
-            <div className="cursor-pointer absolute top-1 right-1 p-2 rounded-full bg-blue-500 text-white flex items-center justify-center w-8 h-8" onClick={handleSearch}>
-              <FaSearch size={18} color="white" />
-            </div>
-        </div>
-      </div>
+      <SearchBar onEnter={handleSearch}></SearchBar>
 
       {showGreeting && (
         <div className="pt-48 flex flex-col items-center justify-center">

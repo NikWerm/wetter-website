@@ -32,7 +32,7 @@ function SideNavigation() {
       </div>
 
       {/* Button to open the side navigation */}
-      <span onClick={openNav} className="cursor-pointer text-lg absolute top-3 right-4">
+      <span onClick={openNav} className="cursor-pointer text-lg absolute top-4 right-4">
         <IoIosMenu size={50}></IoIosMenu>
       </span>
     </div>
