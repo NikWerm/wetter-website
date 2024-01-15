@@ -16,13 +16,17 @@ function SearchBar({ onEnter }) {
         }
     };
 
+    const handleInputChange = (event, newValue) => {
+        setSearchValue(newValue ? newValue.label : "")
+    };
+
     return (
         <div className="flex items-center justify-center mt-4">
             <Stack sx={{ width: '50%' }}>
                 <Autocomplete
                     options={city}
                     value={searchValue}
-                    onChange={(event, newValue) => setSearchValue(newValue.label)}
+                    onChange={handleInputChange}
                     renderInput={(params) => (
                         <TextField 
                             {...params} 
