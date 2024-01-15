@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { FaSearch } from 'react-icons/fa';
 import SideNavigation from "./SideNavigation";
-import { Line } from 'react-chartjs-2';
 import Sun from "../images/happysun.png";
-import Graph from "../pages/graph"
 import SearchBar from "./searchbar";
 
 function Home() {
   const [weatherData, setWeatherData] = useState([]);
-  const [temperatureUnit, setTemperatureUnit] = useState("celsius");
   const [showGreeting, setShowGreeting] = useState(true);
-  const [inputFocused, setInputFocused] = useState(false);
   const [apiUrl, setApiUrl] = useState("");
 
   const handleSearch = (value) => {
@@ -31,7 +26,7 @@ function Home() {
         const processedData = data.days.slice(0, 4).map((day, index) => ({
           name: data.resolvedAddress,
           date: day.datetime,
-          main: { temp: convertTemperature(day.temp, temperatureUnit).toFixed(2) },
+          main: { temp: convertTemperature(day.temp).toFixed(2) },
           weather: [{ description: day.description }],
           wind: { speed: day.windspeed },
           isToday: index === 0,
@@ -44,19 +39,10 @@ function Home() {
     };
 
     fetchWeatherData();
-  }, [apiUrl, temperatureUnit]);
+  }, [apiUrl]);
 
-  const convertTemperature = (temperature, unit) => {
-    switch (unit) {
-      case "celsius":
+  const convertTemperature = (temperature) => {
         return (temperature - 32) * (5 / 9);
-      case "fahrenheit":
-        return temperature;
-      case "kelvin":
-        return (temperature - 32) * (5 / 9) + 273.15;
-      default:
-        return temperature;
-    }
   };
 
   return (
@@ -82,12 +68,7 @@ function Home() {
               <div>
                 <h2 className="text-xl font-semibold">{day.date}</h2>
                 <p className="text-gray-600">
-                  Temperature: {day.main.temp}{" "}
-                  {temperatureUnit === "celsius"
-                    ? "°C"
-                    : temperatureUnit === "fahrenheit"
-                    ? "°F"
-                    : "K"}
+                  Temperature: {day.main.temp}{"°C"}
                 </p>
                 {day.wind && (
                   <p className="text-gray-600">Wind Speed: {day.wind.speed} m/s</p>
