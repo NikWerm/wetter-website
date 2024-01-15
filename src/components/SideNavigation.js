@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { IoIosMenu } from 'react-icons/io';
 import { Link } from 'react-router-dom';
-import Graph from '../pages/graph';
 
 function SideNavigation() {
   const [isOpen, setIsOpen] = useState(false);
