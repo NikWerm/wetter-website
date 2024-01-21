@@ -8,14 +8,31 @@ function Home() {
   const [showGreeting, setShowGreeting] = useState(true);
   const [apiUrl, setApiUrl] = useState("");
 
+  const city = [
+    { label: "Berlin" },
+    { label: "Manchester" },
+    { label: "Liverpool" },
+    { label: "Paris" },
+    { label: "Rome" },
+    { label: "New York" },
+    { label: "Tokyo" },
+    { label: "Sydney" },
+    { label: "Cape Town" },
+    { label: "Dubai" }
+];
+
+
   const handleSearch = (value) => {
         if (value === "") {
             return 0;
         }
+        
         const newApiUrl = "https://09651711-8867-4adf-8ae7-070a3ce64f43.mock.pstmn.io/" + value;
         setApiUrl(newApiUrl);
         setShowGreeting(false);
     };
+
+  
 
   useEffect(() => {
     const fetchWeatherData = async () => {
@@ -41,14 +58,12 @@ function Home() {
     fetchWeatherData();
   }, [apiUrl]);
 
-  const convertTemperature = (temperature) => {
-        return (temperature - 32) * (5 / 9);
-  };
+  const convertTemperature = (temperature) => (temperature - 32) * (5 / 9);
 
   return (
     <div>
       <SideNavigation></SideNavigation>
-      <SearchBar onEnter={handleSearch}></SearchBar>
+      <SearchBar onEnter={handleSearch} suggestions={city}></SearchBar>
 
       {showGreeting && (
         <div className="pt-48 flex flex-col items-center justify-center">
@@ -56,8 +71,8 @@ function Home() {
           <img src={Sun} className="mt-4 h-40" alt="Sun" />
         </div>
       )}
-
-      <div className="flex items-center justify-center">
+      
+        <div className="flex items-center justify-center">
         <div className="bg-white rounded shadow-lg">
           {weatherData.map((day, index) => (
             <div key={index} className={`mt-${index === 0 ? '0' : '4'} mx-4 my-4`}>
@@ -73,10 +88,10 @@ function Home() {
                 {day.wind && (
                   <p className="text-gray-600">Wind Speed: {day.wind.speed} m/s</p>
                 )}
-                <p className="text-gray-600">Condition: {day.weather[0].description}</p>
+                <p className="text--600">Condition: {day.weather[0].description}</p>
               </div>
             </div>
-          ))}
+          ))}    
         </div>
       </div>
     </div>

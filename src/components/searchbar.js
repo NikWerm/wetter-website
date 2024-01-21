@@ -1,14 +1,8 @@
 import React, { useState } from "react";
 import { Autocomplete, Stack, TextField } from "@mui/material";
 
-function SearchBar({ onEnter }) {
+function SearchBar({ onEnter, suggestions }) {
     const [searchValue, setSearchValue] = useState('');
-    
-    const city = [
-        {label: "Berlin"},
-        {label: "Manchester"},
-        {label: "Liverpool"}
-    ];
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
@@ -17,20 +11,20 @@ function SearchBar({ onEnter }) {
     };
 
     const handleInputChange = (event, newValue) => {
-        setSearchValue(newValue ? newValue.label : "")
+        setSearchValue(newValue ? newValue.label : "");
     };
 
     return (
         <div className="flex items-center justify-center mt-4">
             <Stack sx={{ width: '50%' }}>
                 <Autocomplete
-                    options={city}
+                    options={suggestions}
                     value={searchValue}
                     onChange={handleInputChange}
                     renderInput={(params) => (
-                        <TextField 
-                            {...params} 
-                            label="City" 
+                        <TextField
+                            {...params}
+                            label="City"
                             InputProps={{
                                 ...params.InputProps,
                                 endAdornment: null,
